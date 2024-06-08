@@ -16,7 +16,7 @@ function App() {
     flex items-center flex-col justify-center w-screen'>
 
     
-     {/* <SineWave/> */}
+     <SineWave/>
      {/* <ThreeJSWave/> */}
      {/* <CircularWave/> */}
      <Cloud/>

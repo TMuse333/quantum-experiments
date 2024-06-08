@@ -5,7 +5,6 @@ import './App.css'
 import SineWave from './components/sineWave/sineWave'
 import ThreeJSWave from './components/threeeJsWave/threeJsWave'
 import CircularWave from './components/circularWave/circularWave'
-import Cloud from './components/cloud/cloud'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,10 +15,9 @@ function App() {
     flex items-center flex-col justify-center w-screen'>
 
     
-     {/* <SineWave/> */}
+     <SineWave/>
      {/* <ThreeJSWave/> */}
      {/* <CircularWave/> */}
-     <Cloud/>
      </div>
     </>
   )
