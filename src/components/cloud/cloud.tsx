@@ -1,94 +1,65 @@
-import React, { useRef, useEffect } from 'react';
-import * as THREE from 'three';
+import React, { useEffect, useRef } from 'react';
 
 const Cloud: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const cloud = useRef<{ x: number; y: number; radius: number }[]>([]);
+  const frameId = useRef<number | null>(null);
 
   useEffect(() => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const container = containerRef.current;
-    if (container) {
-      container.appendChild(renderer.domElement);
-    }
+    const c = canvas.getContext('2d');
+    if (!c) return;
 
-    camera.position.z = 10;
+    const generateCloud = () => {
+      const numCircles = 20; // Number of circles in the cloud
+      const cloudWidth = 200; // Width of the cloud
+      const cloudHeight = 50; // Height of the cloud
 
-    const cloudGeometry = new THREE.SphereGeometry(1, 32, 32);
+      // Calculate center of canvas
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
 
-    // Create an array to store cloud mesh objects
-    const cloudMeshes: THREE.Mesh[] = [];
+      for (let i = 0; i < numCircles; i++) {
+        const x = centerX + (Math.random() - 0.5) * cloudWidth; // Random x within cloudWidth range
+        const y = centerY + (Math.random() - 0.5) * cloudHeight; // Random y within cloudHeight range
+        const radius = Math.random() * 20 + 10; // Random radius between 10 and 30
 
-    // Define parameters for cloud spheres
-    const numSpheres = 30;
-    const minSize = 0.5;
-    const maxSize = 1.5;
+        cloud.current.push({ x, y, radius });
+      }
+    };
 
-    for (let i = 0; i < numSpheres; i++) {
-      // Randomize position
-      const x = (Math.random() - 0.5) * 20;
-      const y = (Math.random() - 0.5) * 20;
-      const z = (Math.random() - 0.5) * 20;
+    const drawCloud = () => {
+      c.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Randomize size
-      const size = Math.random() * (maxSize - minSize) + minSize;
+      cloud.current.forEach(circle => {
+        // Add small random displacement to circle position
+        circle.x += (Math.random() - 0.5) * 2.7;
+        circle.y += (Math.random() - 0.5) * 1.1;
 
-      // Randomize opacity and color
-      const opacity = Math.random() * 0.5 + 0.2;
-      const color = new THREE.Color(Math.random(), Math.random(), Math.random());
-
-      // Create cloud material
-      const cloudMaterial = new THREE.MeshLambertMaterial({ color, opacity, transparent: true });
-
-      // Create cloud sphere
-      const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
-      cloudMesh.position.set(x, y, z);
-      cloudMesh.scale.set(size, size, size);
-
-      // Add cloud sphere to the scene
-      scene.add(cloudMesh);
-
-      // Store cloud mesh object
-      cloudMeshes.push(cloudMesh);
-    }
-
-    // Add ambient and directional lights to the scene
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight.position.set(1, 1, 1);
-    scene.add(directionalLight);
-
-    // Animation loop
-    const animate = () => {
-      requestAnimationFrame(animate);
-      cloudMeshes.forEach(cloudMesh => {
-        cloudMesh.rotation.y += 0.001; // Rotate the cloud
+        c.beginPath();
+        c.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+        c.fillStyle = 'white';
+        c.fill();
       });
-      renderer.render(scene, camera);
-    };
-    animate();
 
-    // Resize handler
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      // Request next frame
+      frameId.current = requestAnimationFrame(drawCloud);
     };
-    window.addEventListener('resize', handleResize);
 
-    // Cleanup
+    generateCloud();
+    drawCloud();
+
+    // Clean-up
     return () => {
-      window.removeEventListener('resize', handleResize);
-      container?.removeChild(renderer.domElement);
+      if (frameId.current) {
+        cancelAnimationFrame(frameId.current);
+      }
     };
   }, []);
 
-  return <div ref={containerRef} />;
+  return <canvas ref={canvasRef} width={800} height={600}></canvas>;
 };
 
 export default Cloud;

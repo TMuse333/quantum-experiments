@@ -12,9 +12,9 @@ const SineWave: React.FC = () => {
 
     const waves = [
       {
-        amplitude: 50,
-        frequency: 0.01,
-        speed: 0.02,
+        amplitude: 25,
+        frequency: 0.02,
+        speed: 0.06,
         xOffset: 0,
         color: 'rgba(0, 191, 255, 0.5)', // Sky Blue
       },
@@ -27,7 +27,7 @@ const SineWave: React.FC = () => {
       },
       {
         amplitude: 20,
-        frequency: 0.03,
+        frequency: 0.05,
         speed: 0.04,
         xOffset: 0,
         color: 'rgba(138, 43, 226, 0.2)', // Blue Violet
