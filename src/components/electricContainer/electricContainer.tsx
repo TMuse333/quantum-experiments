@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import brain from '../../../public/focusFlow-brain-nobg.webp';
+import brain from '/focusFlow-brain-nobg.webp';
 
 const ElectricContainer = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -21,7 +21,7 @@ const ElectricContainer = () => {
             // Style for the electric outline
             c.lineWidth = 20;
             c.strokeStyle = "#e0f7ff";
-            c.shadowBlur = 25;
+            c.shadowBlur = 50;
             c.shadowColor = "#e0f7ff";
     
             // Define path for rounded rectangle with wavy effect
@@ -81,11 +81,13 @@ const ElectricContainer = () => {
         animate();
     }, []);
     
+
     
     
 
     return (
-        <section className="relative w-full text-gray-200 bg-gradient-to-b from-[#00bfff] to-[#2985a3] w-[80vw] mx-auto max-w-[900px] rounded-2xl overflow-hidden">
+        <section className="relative  text-gray-200 bg-gradient-to-b from-[#00bfff] to-[#2985a3] w-[80vw] mx-auto max-w-[900px]
+         rounded-2xl overflow-hidden h-[60vh]">
             <h2 className="text-2xl sm:text-3xl md:text-4xl pt-4">title here</h2>
             <img src={brain} alt="brain" className='w-[50%] mx-auto object-contain' />
             <p className="pb-8">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio hic laborum fugit illo odit. Tenetur similique velit harum necessitatibus porro.</p>
@@ -94,7 +96,7 @@ const ElectricContainer = () => {
             <canvas
                 ref={canvasRef}
                 className="absolute inset-0 rounded-2xl pointer-events-none
-                w-full h-full"
+              w-[80vw] h-[60vh]"
                 style={{ zIndex: 1 }}
             ></canvas>
         </section>
