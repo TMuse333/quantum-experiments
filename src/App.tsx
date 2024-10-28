@@ -15,26 +15,29 @@ import SpinningSpiral from './components/spinningSpiral/spinningSpiral'
 import Calendar from './components/calendar/calendar'
 import Calendar2 from './components/calendar2/calendar2'
 import Carousel from './components/dateCarousel/dateCarosuel'
+import ElectricContainer from './components/electricContainer/electricContainer'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-    <div className='bg-gray-400 absolute top-0 left-0
-    flex items-center flex-col justify-center w-screen'>
+    <div className='bg-black absolute top-0 left-0
+    flex items-center flex-col justify-center w-screen
+    h-screen'>
     {/* <Carousel/> */}
-    <Calendar/>
+    {/* <Calendar/> */}
      {/* <SineWave/> */}
      {/* <ThreeJSWave/> */}
      {/* <CircularWave/> */}
      {/* <Cloud/> */}
-     {/* <FloatingAura/>
-     <RotatingCircle/>
-     <PulsatingCircle/>
-     <CircularOrbit/>
-     <ConcentricCircles/>
-     <SpinningSpiral/> */}
+     {/* <FloatingAura/> */}
+     {/* <RotatingCircle/> */}
+     {/* <PulsatingCircle/> */}
+     {/* <CircularOrbit/> */}
+     {/* <ConcentricCircles/> */}
+     {/* <SpinningSpiral/> */}
+     <ElectricContainer/>
      </div>
     </>
   )
